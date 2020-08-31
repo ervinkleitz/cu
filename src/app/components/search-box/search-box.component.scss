@@ -1,0 +1,13 @@
+.search-box {
+    height: 30px;
+    margin-bottom: 10px;
+    border-color: #eee;
+    border-style: solid;
+    border-width: 1px;
+    width: 250px;
+}
+
+::placeholder {
+    color: lightgrey;
+    opacity: 1;
+}

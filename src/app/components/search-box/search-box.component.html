@@ -1,0 +1,9 @@
+<span>
+    <input type="text"
+           class="search-box"
+           placeholder="Search..."
+           (keyup)="applySearchText($event)">
+
+    <span *ngIf="selectedColumns$"
+          style="margin-left: 10px">Selected {{selectedColumns$}}</span>
+</span>

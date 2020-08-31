@@ -1,0 +1,71 @@
+.table-component {
+    background: #f9f9f9;
+    padding: 1em;
+    margin: 1em;
+    // max-width: 1200px;
+
+    .odd {
+        background: #e8f4f8;
+    }
+
+    .even {
+        background: white;
+    }
+
+    table {
+        border-collapse: collapse;
+        background: white;
+    }
+
+    table,
+    td {
+        border-top: 1px solid lightgrey;
+        border-bottom: 1px solid lightgrey;
+    }
+
+    th {
+        padding: 1em 0;
+        border: 1px solid lightgrey;
+        text-align: center
+    }
+
+    .table-header:hover,
+    .table-header:focus,
+    .table-header:active {
+        cursor: pointer;
+        background: lightgrey;
+    }
+
+    thead tr th {
+        position: relative;
+    }
+
+    .resize:hover {
+        cursor: col-resize;
+        user-select: none;
+    }
+
+    span.column-resizer {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        width: 10px;
+        height: 100%;
+        padding: 0;
+        cursor: col-resize;
+        border: 1px solid transparent;
+    }
+
+    td {
+        padding: 1em;
+    }
+
+    .button {
+        padding: 0.5em;
+        height: 34px;
+        cursor: pointer;
+        margin-left: 20px;
+    }
+}

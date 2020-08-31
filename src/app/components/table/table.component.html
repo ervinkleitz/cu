@@ -1,0 +1,51 @@
+<div class="table-component"
+     (mouseup)="onMouseUp($event)">
+
+    <app-search-box></app-search-box>
+
+    <button class="button"
+            [disabled]="selectedColumns"
+            title="Select columns and sort"
+            (click)="sortColumns()">Sort Selected Columns</button>
+
+    <table>
+        <thead [ngClass]="{'resize': pressed}">
+            <tr cdkDropList
+                (cdkDropListDropped)="drop($event)"
+                cdkDropListOrientation="horizontal">
+                <th *ngFor="let column of columns"
+                    [ngClass]="{'table-header': !pressed}"
+                    (click)="selectColumn(column)"
+                    tabindex="0"
+                    [style.width.px]="column.width">
+
+
+                    <span class="column-resizer"
+                          (mousedown)="onMouseDown($event, column)"></span>
+                    <div class="gridHeader"
+                         [cdkDrag]="pressed">
+                        <input *ngIf="column.selected"
+                               type="checkbox"
+                               [checked]="column.selected">
+                        {{column.displayName | uppercase}}
+                        <span *ngIf="column.selected">
+                            <span *ngIf="table$?.sortOrder === 'asc'">&uarr;</span>
+                            <span *ngIf="table$?.sortOrder === 'desc'">&darr;</span>
+                        </span>
+                    </div>
+
+
+                </th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of table$?.rows | searchForText: table$?.searchText; let even = even; let odd = odd"
+                [ngClass]="{odd: odd, even: even}">
+                <td *ngFor="let column of columns">
+                    {{row[column.key]}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
