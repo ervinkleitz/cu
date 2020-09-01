@@ -14,11 +14,9 @@ export class StorageEffects {
     tap(([action, store]) => {
       const columnsStr = store?.columns ? JSON.stringify(store.columns) : '';
       const sortOderStr = store?.sortOrder ? JSON.stringify(store.sortOrder) : '';
-      console.log(action,TableActions.Sort )
+
        // Cache in storage
-      // if(action.type === TableActions.Sort) {
       sessionStorage.setItem('cu_cols', columnsStr);
-      // }
       sessionStorage.setItem('cu_sortOrder', sortOderStr);
     })
   );

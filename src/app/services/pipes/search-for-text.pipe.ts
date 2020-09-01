@@ -8,7 +8,7 @@ export class SearchForTextPipe implements PipeTransform {
 
   transform(items: IRow[], filter: string): any[] {
 
-    if (!items || !filter || Object.keys(filter).length === 0 && filter.constructor === Object) {
+    if (!items || !filter) {
       return items;
     }
     // Simple filter
