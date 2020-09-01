@@ -12,6 +12,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchForTextPipe } from './services/pipes/search-for-text.pipe';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
+import { EffectsModule } from '@ngrx/effects';
+import { StorageEffects } from './store/effects/storage.effect';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { SearchBoxComponent } from './components/search-box/search-box.component
     DragDropModule,
     StoreModule.forRoot({ table: TableReducer }),
     StoreDevtoolsModule.instrument({ maxAge: 25 }),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    EffectsModule.forRoot([StorageEffects])
   ],
   providers: [SearchForTextPipe],
   bootstrap: [AppComponent],

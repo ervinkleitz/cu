@@ -95,32 +95,11 @@ export const TableReducer = (state: TableState = initialTableState, action: any)
 };
 
 /**
- * !!!!!!!
- * !!!!!!!
- * I would use Effects here but I am running out of time to learn it and implement it here. As such,
- * I am only using pure functions to return a computed state property
- * !!!!!!!
- * !!!!!!!
- */
-
-/**
- * @desc Save value in session storage
- * @param key The name of the key in session
- * @param value The value to store in session
- */
-function saveToSession(key, value): void {
-  const session = window.sessionStorage;
-  session.setItem(key, JSON.stringify(value));
-}
-
-/**
  * @desc Retrieve the new sort order after user has "Sorted" the table
  * @param state The current state of the store
  */
 function getNewSortOrder(state: TableState): string {
   const newSortOrder = state.sortOrder === 'asc' ? 'desc' : 'asc';
-  // Cache order. Should really be an effect.
-  saveToSession('cu_sortOrder', newSortOrder);
   return newSortOrder;
 }
 
@@ -217,9 +196,6 @@ function sortByColumns({ columns, rows, sortOrder }): IRow[] {
   } else {
     return rows;
   }
-
-  // Cache columns in session
-  saveToSession('cu_cols', columns);
 
   return sortedRows;
 }

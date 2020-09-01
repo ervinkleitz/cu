@@ -60,6 +60,51 @@ export class TableComponent implements OnInit, OnDestroy {
       .join(', ');
   }
 
+  private getData(): void {
+    let sessionCols: IColumn[];
+    let sessionOrder: string;
+    if (sessionStorage.getItem('cu_cols')) {
+      sessionCols = JSON.parse(sessionStorage.getItem('cu_cols'));
+    }
+
+    if (sessionStorage.getItem('cu_sortOrder')) {
+      sessionOrder = JSON.parse(sessionStorage.getItem('cu_sortOrder')) === 'asc' ? 'desc' : 'asc';
+    }
+
+    this.dataService.getData().subscribe((data: any) => {
+
+      const initialTableState = {
+        rows: data.results,
+        columns: sessionCols || fakeColumns,
+        searchText: '',
+        selectedColumns: [],
+        pageNumber: 0,
+        sortOrder: sessionOrder
+      } as ITable;
+
+      this.store.dispatch(TableLoad(initialTableState));
+      // Set this to enable/disable the Sort button
+      this.setSelectedColumns();
+      // Apply sort if we have any cached sorting data
+      this.store.dispatch(TableSetOrder({ payload: sessionOrder }));
+      // Now sort
+      this.store.dispatch(TableSort());
+    });
+  }
+
+  /**
+   * @desc Clear cached sorting information in session storage
+   */
+  clearSessionStorage(): void {
+    if (sessionStorage.getItem('cu_cols')) {
+      sessionStorage.setItem('cu_cols', '');
+    }
+
+    if (sessionStorage.getItem('cu_sortOrder')) {
+      sessionStorage.setItem('cu_sortOrder', '');
+    }
+  }
+
   /**
    * @desc Set column as "selected" and update the store
    * @param selectedColumn The column selected by the user
@@ -140,35 +185,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    let sessionCols: IColumn[];
-    let sessionOrder: string;
-    if (sessionStorage.getItem('cu_cols')) {
-      sessionCols = JSON.parse(sessionStorage.getItem('cu_cols'));
-    }
-
-    if (sessionStorage.getItem('cu_sortOrder')) {
-      sessionOrder = JSON.parse(sessionStorage.getItem('cu_sortOrder')) === 'asc' ? 'desc' : 'asc';
-    }
-
-    this.dataService.getData().subscribe((data: any) => {
-
-      const initialTableState = {
-        rows: data.results,
-        columns: sessionCols || fakeColumns,
-        searchText: '',
-        selectedColumns: [],
-        pageNumber: 0,
-        sortOrder: sessionOrder
-      } as ITable;
-
-      this.store.dispatch(TableLoad(initialTableState));
-      // Set this to enable/disable the Sort button
-      this.setSelectedColumns();
-      // Apply sort if we have any cached sorting data
-      this.store.dispatch(TableSetOrder({ payload: sessionOrder }));
-      // Now sort
-      this.store.dispatch(TableSort());
-    });
+    this.getData();
 
     this.store.pipe(
       select('table'),

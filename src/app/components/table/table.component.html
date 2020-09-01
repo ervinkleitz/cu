@@ -7,6 +7,9 @@
             [disabled]="!selectedColumns"
             title="Select columns and sort"
             (click)="sortColumns()">Sort Selected Columns</button>
+    <button class="button"
+            title="Clear all Sort Information in Session Storage"
+            (click)="clearSessionStorage()">Clear Cache</button>
 
     <table>
         <thead [ngClass]="{'resize': pressed}">
