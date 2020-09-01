@@ -4,7 +4,7 @@
     <app-search-box></app-search-box>
 
     <button class="button"
-            [disabled]="selectedColumns"
+            [disabled]="!selectedColumns"
             title="Select columns and sort"
             (click)="sortColumns()">Sort Selected Columns</button>
 
